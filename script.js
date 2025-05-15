@@ -1,11 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const wholeapp = document.getElementById("app-wrapper");
     const cityinput = document.getElementById("city-input");
     const geteweatherbtn = document.getElementById("get-weather-btn");
-    const weatherInfo = document.getElementById("weather-info");
-    const citynamedisplay = document.getElementById("city-name");
-    const temperaturedisplay = document.getElementById("temperature");
-    const descriptiondisplay = document.getElementById("description");
+    const currentTemp = document.getElementById("current-temp");
+    const humidity = document.getElementById("humidity");
+    const wind = document.getElementById("wind");
+    const zone = document.getElementById("safe-danger-zone");
+    const date = document.getElementById("date");
+    const forecast = document.getElementById("forecast");
+    const mainTemp = document.getElementById("main-temp");
+    const seeDetailsbtn = document.getElementById("see-details-btn");
+    const graph = document.getElementById("forecast-graph");
+    const row = document.getElementById("forecast-row");
+    const item = document.getElementById("forecast-item");
     const errormessage = document.getElementById("error-message");
+// in this we cannot use '_ and -' for the declaration of the variable 
+   
 
     // set the api key here 
     const API_KEY = "b836cad8ed9d48df97c133143251403";
