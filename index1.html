@@ -7,68 +7,53 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <header>
-        <h1>Weather App</h1>
-        
-  <div id="app-wrapper">
-    <!-- Left Panel -->
-    <div id="sidebar">
-        <input type="text" id="city-input" placeholder="Enter city name" />
-        <button id="search-btn">Search</button>
-      <p id="current-temp"></p>
+  <header>
+    <h1>Weather App</h1>
+  </header>
+
+  <div class="search-bar">
+    <input type="text" id="city-input" placeholder="Enter city name" />
+    <button id="search-btn">Search</button>
+  </div>
+
+  <div class="app-wrapper">
+    <!-- Sidebar -->
+    <div class="card sidebar">
+      <p id="city-name"></p>
+      <p id="temperature"></p>
+      <p id="condition"></p>
       <p id="humidity"></p>
       <p id="wind"></p>
-      <div id="safe-danger-zone">
-        <p>Safe: 0.0% - 0.9%</p>
-        <p>Dangerous: 12% - 90%</p>
-      </div>
-      <div id="graph">
-        <!-- Placeholder for graph -->
-        <p>Hourly Forecast</p>
-        <canvas id="tempChart"></canvas>
-      </div>
-      <p id="footer-text">Air quality is generally acceptable...</p>
     </div>
 
     <!-- Center Panel -->
-    <div id="center-panel">
-      <h1>Storm with Heavy Rain</h1>
-      <p id="date"></p>
-      <p id="forecast"></p>
+    <div class="card middle-panel">
+      <h2 id="weather-condition"></h2>
+      <p id="date-time"></p>
+      <p id="weather-description"></p>
       <div id="main-temp">
-        <h2></h2>
-        <p>Feels like temperature</p>
+        <h3 id="temperature"></h3>
+        <p id="feels-like"></p>
       </div>
+      <p id="humidity"></p>
+      <p id="wind"></p>
       <button id="see-details-btn">See Details</button>
     </div>
-
     <!-- Right Panel -->
-     <div id="right-panel">
-     
-      <div id="forecast-header">
-        <h2>3-Day Forecast</h2>
-        <p>Weather forecast for the next 3 days</p>
-        <div id="forecast-graph">
-        <div id="forecast-row">
-        <div id="forecast-item">
-          <p>Today</p>
-          <p>High: 23°C</p>
-          <p>Low: 18°C</p>
-        </div>
-        <div id="forecast-item">
-          <p>Tommorow</p>
-          <p>High: 20°C</p>
-          <p>Low: 13°C</p>
-        </div>
-        <div id="forecast-item">
-          <p>Day After Tommorow</p>
-          <p>High: 16°C</p>
-          <p>Low: 13°C</p>
-        </div>
-       
-        </div>
-      </div>
+    <div class="card right-panel">
+      <h3>Detailed Information</h3>
+      <p id="pressure"></p>
+      <p id="visibility"></p>
+      <p id="sunrise"></p>
+      <p id="sunset"></p>
+      <p id="uv-index"></p>
+      <p id="dew-point"></p>
+      <p id="cloudiness"></p>
     </div>
   </div>
+  <div class="footer">
+    <p>&copy; 2023 Weather App</p>
+
+  <script src="script.js"></script>
 </body>
 </html>

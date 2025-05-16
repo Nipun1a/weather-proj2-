@@ -1,84 +1,93 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const wholeapp = document.getElementById("app-wrapper");
-    const cityinput = document.getElementById("city-input");
-    const geteweatherbtn = document.getElementById("get-weather-btn");
-    const currentTemp = document.getElementById("current-temp");
-    const humidity = document.getElementById("humidity");
-    const wind = document.getElementById("wind");
-    const zone = document.getElementById("safe-danger-zone");
-    const date = document.getElementById("date");
-    const forecast = document.getElementById("forecast");
-    const mainTemp = document.getElementById("main-temp");
-    const seeDetailsbtn = document.getElementById("see-details-btn");
-    const graph = document.getElementById("forecast-graph");
-    const row = document.getElementById("forecast-row");
-    const item = document.getElementById("forecast-item");
-    const errormessage = document.getElementById("error-message");
-// in this we cannot use '_ and -' for the declaration of the variable 
-   
+// updated ha yeh wale js
+// Weather App JavaScript
+// This script fetches weather data from an API and displays it in a web application.
 
-    // set the api key here 
-    const API_KEY = "b836cad8ed9d48df97c133143251403";
+// Ensure the DOM is loaded
+document.addEventListener("DOMContentLoaded", function () {
+  const cityInput = document.getElementById("city-input");
+  const searchBtn = document.getElementById("search-btn");
 
-    geteweatherbtn.addEventListener('click', async function()  {
-        const city = cityinput.value;
-        if (!city) return;
+  // LEFT PANEL ELEMENTS
+  const cityNameEl = document.getElementById("city-name");
+  const temperatureEl = document.getElementById("temperature");
+  const conditionEl = document.getElementById("condition");
+  const humidityEl = document.getElementById("humidity");
+  const windEl = document.getElementById("wind");
 
-        // it may throw an error 
-        // server/database is always in another continent
-        // so we use try catch block
-        //remember to use async await and await is always in the async function
-        try{
-            const weatherdata = await fetchweatherdata(city);
-            displayweatherdata(weatherdata);
-        }catch(error){
-            showerror();
+  // CENTER PANEL ELEMENTS
+  const weatherConditionEl = document.getElementById("weather-condition");
+  const dateTimeEl = document.getElementById("date-time");
+  const weatherDescEl = document.getElementById("weather-description");
+  const mainTempEl = document.getElementById("temperature");
+  const feelsLikeEl = document.getElementById("feels-like");
+  const humidityCenterEl = document.getElementById("humidity");
+  const windCenterEl = document.getElementById("wind");
 
-        }
-        });
+  // RIGHT PANEL ELEMENTS khuch isme chal nahe rahe 
+  const pressureEl = document.getElementById("pressure");
+  const visibilityEl = document.getElementById("visibility");
+  const sunriseEl = document.getElementById("sunrise");
+  const sunsetEl = document.getElementById("sunset");
+  const uvIndexEl = document.getElementById("uv-index");
+  const dewPointEl = document.getElementById("dew-point");
+  const cloudinessEl = document.getElementById("cloudiness");
 
-        async function fetchweatherdata(city){
-            //gets the data 
-            const url = `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}`;//api url
-            try{
-                const response = await fetch(url);
-                if (!response.ok){
-                    throw new Error("city not found");
+  searchBtn.addEventListener("click", async function () {
+    const city = cityInput.value.trim();
+    if (!city) {
+      alert("Please enter a city name");
+      return;
+    }
 
-                }
-                const data = await response.json();
-                return data;
-            }catch(error){
-                console.error("error fetching weather data",error);
-                throw error;
-            }
+    try {
+      const data = await fetchWeatherData(city);
+      displayWeather(data);
+    } catch (e) {
+      alert("Failed to fetch data. Check city name or internet.");
+      console.error(e);
+    }
+  });
 
-        }
+  async function fetchWeatherData(city) {
+    const API_KEY = "79c7740ad40f4226a7635000251605";
+    const url = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=yes`;
 
-        function displayweatherdata(data){
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("City not found");
+    }
 
-            //display the data
-            console.log(data); //debugging checking the data in the console
-            // extract the necessary fields aur data bhe from the API response
-            const {name} = data.location;
-            const {temp_c, condition} = data.current;
-            const {text} = condition;
-            // display the data
-            citynamedisplay.textContent = name;
-            temperaturedisplay.textContent = `Temperature :  ${temp_c}°C`;
-            descriptiondisplay.textContent = `Description : ${text}`;
-            // show weather info hide error message 
-            weatherInfo.classList.remove("hidden");
-            errormessage.classList.add("hidden");
-            
-        }
+    const data = await response.json();
+    return data;
+  }
 
-        function showerror(){
-            // show the error message
-            weatherInfo.classList.add("hidden");
-            errormessage.classList.remove("hidden");
-        }
+  function displayWeather(data) {
+    const location = data.location;
+    const current = data.current;
 
+    // LEFT PANEL
+    cityNameEl.textContent = `City: ${location.name}`;
+    temperatureEl.textContent = `Temperature: ${current.temp_c}°C`;
+    conditionEl.textContent = `Condition: ${current.condition.text}`;
+    humidityEl.textContent = `Humidity: ${current.humidity}%`;
+    windEl.textContent = `Wind: ${current.wind_kph} kph`;
 
+    // CENTER PANEL
+    weatherConditionEl.textContent = `${current.condition.text}`;
+    dateTimeEl.textContent = `Date & Time: ${location.localtime}`;
+    weatherDescEl.textContent = `Feels like ${current.feelslike_c}°C, with ${current.condition.text.toLowerCase()}.`;
+    mainTempEl.textContent = `${current.temp_c}°C`;
+    feelsLikeEl.textContent = `Feels like: ${current.feelslike_c}°C`;
+    humidityCenterEl.textContent = `Humidity: ${current.humidity}%`;
+    windCenterEl.textContent = `Wind: ${current.wind_kph} kph`;
 
-    });
+    // RIGHT PANEL (optional fallback if data not in API response)
+    pressureEl.textContent = `Pressure: ${current.pressure_mb} mb`;
+    visibilityEl.textContent = `Visibility: ${current.vis_km} km`;
+    sunriseEl.textContent = `Sunrise: N/A (not in current endpoint)`;
+    sunsetEl.textContent = `Sunset: N/A (not in current endpoint)`;
+    uvIndexEl.textContent = `UV Index: ${current.uv}`;
+    dewPointEl.textContent = `Dew Point: N/A (not in current endpoint)`;
+    cloudinessEl.textContent = `Cloudiness: ${current.cloud}%`;
+  }
+});
