@@ -52,6 +52,9 @@ git clone https://github.com/your-username/weather-proj2.git
 ## 📬 Contact
 
 If you liked this project or want to collaborate, feel free to connect!
+linkedin profile link: www.linkedin.com/in/nipun-pal-450805294
+
+
 
 
 
